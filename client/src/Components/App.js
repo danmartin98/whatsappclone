@@ -1,9 +1,17 @@
 import React from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
 import Login from "./Login";
-import Dashboard from "./Dashboard"
+import Dashboard from "./Dashboard";
+import { ContactsProvider } from "../contexts/ContactsProvider";
 
 export default function App() {
   const [id, setId] = useLocalStorage();
-  return id ? <Dashboard id={id} /> : <Login onIdSubmit={setId} />;
+
+  const dashboard = (
+    <ContactsProvider>
+      <Dashboard id={id} />
+    </ContactsProvider>
+  );
+
+  return id ? dashboard : <Login onIdSubmit={setId} />;
 }
