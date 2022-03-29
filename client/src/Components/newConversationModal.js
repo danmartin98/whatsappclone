@@ -1,5 +1,5 @@
 import React from "react";
 
-export default function newConversationModal() {
+export default function NewConversationModal() {
   return <div>newConversationModal</div>;
 }
