@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { Tab, Nav, Button } from "react-bootstrap";
+import { Tab, Nav, Button, Modal } from "react-bootstrap";
 import Conversations from "./Conversations";
 import Contacts from "./Contacts";
+import NewConversationModal from "./newConversationModal";
+import NewContactModal from "./newContactModal";
 
 const CONVERSATIONS_KEY = "conversations";
 const CONTACTS_KEY = "contacts";
@@ -36,6 +38,10 @@ export default function Sidebar({ id }) {
           New {conversationsOpen ? "Conversation" : "Contact"}
         </Button>
       </Tab.Container>
+
+      <Modal>
+        {conversationsOpen ? <NewConversationModal /> : <NewContactModal />}
+      </Modal>
     </div>
   );
 }
