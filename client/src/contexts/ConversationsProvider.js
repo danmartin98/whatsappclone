@@ -24,7 +24,7 @@ export function ConversationsProvider({ children }) {
 
   const formattedConversations = conversations.map((conversation) => {
     const recipients = conversation.recipients.map((recipient) => {
-      const contact = contact.find((contact) => {
+      const contact = contacts.find((contact) => {
         return contact.id === recipient;
       });
       const name = (contact && contact.name) || recipient;
