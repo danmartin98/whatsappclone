@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import { Modal, Form, Button } from "react-bootstrap";
 import contacts from "./Contacts";
 import { useContacts } from "../contexts/ContactsProvider";
+import { useConversations } from "../contexts/ConversationsProvider";
 
-export default function NewConversationModal() {
+export default function NewConversationModal({ closeModal }) {
   const [selectedContactIds, setSelectedContactIds] = useState([]);
+  const { contacts } = useContacts();
+  const { createConversation } = useConversations();
 
   function handleCheckboxChange(contactId) {
     setSelectedContactIds((prevSelectedContactIds) => {
@@ -12,8 +15,16 @@ export default function NewConversationModal() {
         return prevSelectedContactIds.filter((prevId) => {
           return contactId !== prevId;
         });
+      } else {
+        return [...prevSelectedContactIds, contactId];
       }
     });
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    createConversation(selectedContactIds);
+    closeModal();
   }
   return (
     <>
