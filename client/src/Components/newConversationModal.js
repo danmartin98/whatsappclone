@@ -1,13 +1,19 @@
 import React, { useState } from "react";
 import { Modal, Form, Button } from "react-bootstrap";
-import contacts from "./Contacts";
 import { useContacts } from "../contexts/ContactsProvider";
 import { useConversations } from "../contexts/ConversationsProvider";
 
 export default function NewConversationModal({ closeModal }) {
   const [selectedContactIds, setSelectedContactIds] = useState([]);
   const { contacts } = useContacts();
-  const { createConversations } = useConversations();
+  const { createConversation } = useConversations();
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    createConversation(selectedContactIds);
+    closeModal();
+  }
 
   function handleCheckboxChange(contactId) {
     setSelectedContactIds((prevSelectedContactIds) => {
@@ -21,11 +27,6 @@ export default function NewConversationModal({ closeModal }) {
     });
   }
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    createConversations(selectedContactIds);
-    closeModal();
-  }
   return (
     <>
       <Modal.Header closeButton>Create Conversation</Modal.Header>
@@ -41,9 +42,7 @@ export default function NewConversationModal({ closeModal }) {
               />
             </Form.Group>
           ))}
-          <Button type="submit" className="mt-3">
-            Create
-          </Button>
+          <Button type="submit">Create</Button>
         </Form>
       </Modal.Body>
     </>

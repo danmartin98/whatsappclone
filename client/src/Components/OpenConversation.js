@@ -1,16 +1,15 @@
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import { Form, InputGroup, Button } from "react-bootstrap";
 import { useConversations } from "../contexts/ConversationsProvider";
 
 export default function OpenConversation() {
   const [text, setText] = useState("");
-  const { sendMessage, selectedConversation } = useConversations();
-  // const lastMessageRef = useRef();
   const setRef = useCallback((node) => {
     if (node) {
       node.scrollIntoView({ smooth: true });
     }
   }, []);
+  const { sendMessage, selectedConversation } = useConversations();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -21,12 +20,6 @@ export default function OpenConversation() {
     );
     setText("");
   }
-
-  // useEffect(() => {
-  //   if (lastMessageRef.current) {
-  //     lastMessageRef.current.scrollIntoView({ smooth: true });
-  //   }
-  // }, [lastMessageRef.current]);
 
   return (
     <div className="d-flex flex-column flex-grow-1">
@@ -74,8 +67,9 @@ export default function OpenConversation() {
               onChange={(e) => setText(e.target.value)}
               style={{ height: "75px", resize: "none" }}
             />
-
-            <Button type="submit">Send</Button>
+            <InputGroup.Append>
+              <Button type="submit">Send</Button>
+            </InputGroup.Append>
           </InputGroup>
         </Form.Group>
       </Form>

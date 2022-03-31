@@ -1,5 +1,4 @@
-import React, { useContext, useState } from "react";
-import Contacts from "../Components/Contacts";
+import React, { useContext } from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
 
 const ContactsContext = React.createContext();
