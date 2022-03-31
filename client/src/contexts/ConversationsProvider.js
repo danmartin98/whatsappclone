@@ -35,8 +35,10 @@ export function ConversationsProvider({ id, children }) {
             messages: [...conversation.messages, newMessage],
           };
         }
+
         return conversation;
       });
+
       if (madeChange) {
         return newConversations;
       } else {
@@ -58,14 +60,18 @@ export function ConversationsProvider({ id, children }) {
       return { id: recipient, name };
     });
 
-     const messages = conversation.messages.map(message => {
-      const contact = contacts.find(contact => {
-        return contact.id === message.sender
-      })
-      const name = (contact && contact.name) || message.sender
-      const fromMe = id === message.sender
-      return { ...message, senderName: name, fromMe }
-    })
+    const messages = conversation.messages.map((message) => {
+      const contact = contacts.find((contact) => {
+        return contact.id === message.sender;
+      });
+      const name = (contact && contact.name) || message.sender;
+      const fromMe = id === message.sender;
+      return { ...message, senderName: name, fromMe };
+    });
+
+    const selected = index === selectedConversationIndex;
+    return { ...conversation, messages, recipients, selected };
+  });
 
   const value = {
     conversations: formattedConversations,
@@ -76,21 +82,21 @@ export function ConversationsProvider({ id, children }) {
   };
 
   return (
-    <ConversationsContext.Provider value={value}>
-      {children}
-    </ConversationsContext.Provider>
-  )
-
-
+    <div>
+      <ConversationsContext.Provider value={value}>
+        {children}
+      </ConversationsContext.Provider>
+    </div>
+  );
 }
 
 function arrayEquality(a, b) {
-  if (a.length !== b.length) return false
+  if (a.length !== b.length) return false;
 
-  a.sort()
-  b.sort()
+  a.sort();
+  b.sort();
 
   return a.every((element, index) => {
-    return element === b[index]
-  })
+    return element === b[index];
+  });
 }
